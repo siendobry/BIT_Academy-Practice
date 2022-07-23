@@ -3,4 +3,4 @@ class Greeter:
         self.who = who
 
     def greet(self):
-        print("Hello,", self)
+        return "Hello,", self.who
