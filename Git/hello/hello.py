@@ -1,1 +1,3 @@
-print("tralalala")
+name = "World"
+
+print("Hello", name)
