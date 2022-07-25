@@ -37,8 +37,7 @@ class TestMed:
     def test_3(self):
         assert square(3456456) == 3456456**2
 
-
-@pytest.mark.skipif()           # nie wiem czy o to chodzilo
+@pytest.mark.skipif(True, reason="Incorrect results - stopping testing")
 class TestMega:
 
     def test_1(self):
