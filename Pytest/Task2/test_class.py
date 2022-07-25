@@ -30,7 +30,24 @@ class TestMini:
     # Napisać testy sprawdzające funkcję is_prime dla liczb
     # z przedziału <-1, 6>
 
-# class TestMid:
+class TestMid:
+
+    def test_1(self):
+        assert is_prime(28912) == False
+
+    def test_2(self):
+        assert is_prime(15237) == False
+
+    def test_3(self):
+        assert is_prime(78897) == False
+
+    def test_4(self):
+        assert is_prime(66601) == True
+
+    def test_5(self):
+        assert is_prime(65717) == True
+
+
     # Napisać 5 testów sprawdzających funkcję is_prime dla losowych
     # liczb z przedziału <10 ** 4, 10 ** 5>
 
