@@ -7,3 +7,5 @@ def is_prime(x):
             return False
         i += 1
     return True
+
+print(is_prime(10**10 + 19))
