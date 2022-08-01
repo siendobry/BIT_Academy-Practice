@@ -17,11 +17,10 @@ class robot:
             T[x][y] = "X"  
         elif T[x][y] == "T":
             self.__status = 0
-            T[x][y] = "R"
         elif T[x][y] == "B":
             self.__status = 0
             self.__battery += 10
-            T[x][y] = "R"
+            T[x][y] = "T"
         elif T[x][y] == "G":
             self.__status = 2
             T[x][y] = "X"
@@ -32,115 +31,135 @@ class robot:
 
     def left(self, val = 1):
         if val > 0 and self.__status == 0:
+            destroyed = False
+            crash = False
             for i in range(val):
                 if self.__y <= 0 or self.__map[self.__x][self.__y - 1] == "G":
+                    self.__y += 1
                     self.__status = 2
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x][self.__y - 1] = "X"
+                    destroyed = True
+                    crash = True
                 elif self.__map[self.__x][self.__y - 1] == "W":
-                    self.__y -= 1
                     self.__status = 3
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x][self.__y - 1] = "X"
+                    destroyed = True
                 elif self.__map[self.__x][self.__y - 1] == "B":
                     self.__map[self.__x][self.__y - 1] = "T"
                     self.__battery += 10
+                if not crash:
+                    self.__map[self.__x][self.__y] = self.__curr
                 self.__y -= 1
-                self.__map[self.__x][self.__y] = self.__curr
                 self.__curr = self.__map[self.__x][self.__y]
-                self.__map[self.__x][self.__y] = "R"
                 self.__battery -= 1
                 if self.__battery == 0:
                     self.__status = 1
                     self.__map[self.__x][self.__y] = "X"
+                    destroyed = True
+                if destroyed:
                     break
+                else:
+                    self.__map[self.__x][self.__y] = "R"
         return self
                 
 
     def right(self, val = 1):
         if val > 0 and self.__status == 0:
+            destroyed = False
+            crash = False
             for i in range(val): 
                 if self.__y >= len(self.__map[0]) - 1 or self.__map[self.__x][self.__y + 1] == "G":
+                    self.__y -= 1
                     self.__status = 2
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x][self.__y + 1] = "X"
+                    destroyed = True
+                    crash = True
                 elif self.__map[self.__x][self.__y + 1] == "W":
-                    self.__y += 1
                     self.__status = 3
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x][self.__y + 1] = "X"
+                    destroyed = True
                 elif self.__map[self.__x][self.__y + 1] == "B":
-                    self.__map[self.__x][self.__y + 1] == "T"
+                    self.__map[self.__x][self.__y + 1] = "T"
                     self.__battery += 10
+                if not crash:
+                    self.__map[self.__x][self.__y] = self.__curr
                 self.__y += 1
-                self.__map[self.__x][self.__y] = self.__curr
                 self.__curr = self.__map[self.__x][self.__y]
-                self.__map[self.__x][self.__y] = "R"
                 self.__battery -= 1
                 if self.__battery == 0:
                     self.__status = 1
                     self.__map[self.__x][self.__y] = "X"
+                    destroyed = True
+                if destroyed:
                     break
+                else:
+                    self.__map[self.__x][self.__y] = "R"
         return self
             
     def up(self, val = 1):
         if val > 0 and self.__status == 0:
+            destroyed = False
+            crash = False
             for i in range(val):
                 if self.__x <= 0 or self.__map[self.__x - 1][self.__y] == "G":
+                    self.__x += 1
                     self.__status = 2
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x - 1][self.__y] = "X"
+                    destroyed = True
+                    crash = True
                 elif self.__map[self.__x - 1][self.__y] == "W":
-                    self.__x -= 1
                     self.__status = 3
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x - 1][self.__y] = "X"
+                    destroyed = True
                 elif self.__map[self.__x - 1][self.__y] == "B":
-                    self.__map[self.__x - 1][self.__y] == "T"
+                    self.__map[self.__x - 1][self.__y] = "T"
                     self.__battery += 10
+                if not crash:
+                    self.__map[self.__x][self.__y] = self.__curr
                 self.__x -= 1
-                self.__map[self.__x][self.__y] = self.__curr
                 self.__curr = self.__map[self.__x][self.__y]
-                self.__map[self.__x][self.__y] = "R"
                 self.__battery -= 1
                 if self.__battery == 0:
                     self.__status = 1
                     self.__map[self.__x][self.__y] = "X"
+                    destroyed = True
+                if destroyed:
                     break
+                else:
+                    self.__map[self.__x][self.__y] = "R"
         return self
             
     def down(self, val = 1):
         if val > 0 and self.__status == 0:
+            destroyed = False
+            crash = False
             for i in range(val):
                 if self.__x >= len(self.__map) - 1 or self.__map[self.__x + 1][self.__y] == "G":
+                    self.__x -= 1
                     self.__status = 2
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x + 1][self.__y] = "X"
+                    destroyed = True
+                    crash = True
                 elif self.__map[self.__x + 1][self.__y] == "W":
-                    self.__x += 1
                     self.__status = 3
-                    self.__map[self.__x][self.__y] = "X"
-                    self.__battery -= 1
-                    break
+                    self.__map[self.__x + 1][self.__y] = "X"
+                    destroyed = True
                 elif self.__map[self.__x + 1][self.__y] == "B":
-                    self.__map[self.__x + 1][self.__y] == "T"
+                    self.__map[self.__x + 1][self.__y] = "T"
                     self.__battery += 10
+                if not crash:
+                    self.__map[self.__x][self.__y] = self.__curr
                 self.__x += 1
-                self.__map[self.__x][self.__y] = self.__curr
                 self.__curr = self.__map[self.__x][self.__y]
-                self.__map[self.__x][self.__y] = "R"
                 self.__battery -= 1
                 if self.__battery == 0:
                     self.__status = 1
                     self.__map[self.__x][self.__y] = "X"
+                    destroyed = True
+                if destroyed:
                     break
+                else:
+                    self.__map[self.__x][self.__y] = "R"
         return self
 
     def get_status(self):
